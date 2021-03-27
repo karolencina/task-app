@@ -7,7 +7,7 @@ import {
   View,
   FlatList,
   Modal,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import colors from "./colors";
 import { AntDesign } from "@expo/vector-icons";
@@ -46,26 +46,21 @@ export default class App extends React.Component {
   toggleAddFolderModal() {
     this.setState({ addFolderVisible: !this.state.addFolderVisible });
   }
-  "";
 
   renderFolder = (folder) => {
     return <Folder folder={folder} updateFolder={this.updateFolder} />;
   };
 
-  addFolder = folder => {
-      firebase.addFolder({
-        name: folder.name,
-        color: folder.color,
-        tasks: []
-      })
+  addFolder = (folder) => {
+    firebase.addFolder({
+      name: folder.name,
+      color: folder.color,
+      tasks: [],
+    });
   };
 
-  updateFolder = folder => {
-    this.setState({
-      folders: this.state.folders.map((item) => {
-        return item.id === folder.id ? folder : item;
-      }),
-    });
+  updateFolder = (folder) => {
+    firebase.updateFolder(folder);
   };
 
   render() {
@@ -89,13 +84,9 @@ export default class App extends React.Component {
             addFolder={this.addFolder}
           />
         </Modal>
-        <View>
-          <Text>User: {this.state.user.uid}</Text>
-        </View>
+        <View></View>
         <View style={{ flexDirection: "row" }}>
-          <View style={styles.divider} />
           <Text style={styles.title}>Hi</Text>
-          <View style={styles.divider}></View>
         </View>
 
         <View style={{ marginVertical: 48 }}>

@@ -54,7 +54,14 @@ class Fire {
       ref.add(folder);
   }
 
-  updateList(folder) {
+  /*
+  deleteFolder(folder) {
+      let ref = this.ref;
+      ref.doc(folder.id).delete()
+  }
+  */
+
+  updateFolder(folder) {
       let ref = this.ref
 
       ref.doc(folder.id).update(folder)

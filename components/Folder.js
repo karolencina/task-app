@@ -11,6 +11,19 @@ export default class Folder extends React.Component {
   toggleListModal() {
     this.setState({ showFolderVisible: !this.state.showFolderVisible });
   }
+
+  /* 
+
+  I am not able to figure out the issue with my deleteFolder
+  function at the moment, I will do more research and
+  keep trying.
+
+  deleteFolder = folder => {
+  let folderId = this.props.folderId
+  folderId.splice(folder, 1)
+  } 
+  */
+
   render() {
     const folder = this.props.folder;
 
@@ -33,6 +46,9 @@ export default class Folder extends React.Component {
         <TouchableOpacity
           style={[styles.folderContainer, { backgroundColor: folder.color }]}
           onPress={() => this.toggleListModal()}
+          /*
+          onLongPress={() => this.deleteFolder(folder)}
+          */
         >
           <Text style={styles.folderTitle} numberOfLines={1}>
             {folder.name}
