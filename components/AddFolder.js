@@ -28,14 +28,14 @@ export default class AddFolder extends React.Component {
   };
 
   createFolder = () => {
-      const {name, color} = this.state;
+    const { name, color } = this.state;
 
-     const folder = { name, color }
+    const folder = { name, color };
 
-     this.props.addFolder(folder)
+    this.props.addFolder(folder);
 
-      this.setState({name: "" });
-      this.props.closeModal();
+    this.setState({ name: "" });
+    this.props.closeModal();
   };
 
   renderColors() {
@@ -53,34 +53,28 @@ export default class AddFolder extends React.Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Add a new Folder</Text>
+        </View>
         <TouchableOpacity
-          style={{ position: "absolute", top: 64, right: 32 }}
+          style={styles.closeButton}
           onPress={this.props.closeModal}
         >
-          <AntDesign name="close" size={24} color={colors.black} />
+          <AntDesign name="close" size={28} color={colors.black} />
         </TouchableOpacity>
 
-        <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}>
-          <Text style={styles.title}>Add a new Folder</Text>
+        <View style={{ alignSelf: "center", marginHorizontal: 15 }}>
           <TextInput
             style={styles.input}
             placeholder="New Folder Name"
             onChangeText={(text) => this.setState({ name: text })}
           />
 
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              marginTop: 10
-            }}
-          >
-            {this.renderColors()}
-          </View>
+          <View style={styles.renderColors}>{this.renderColors()}</View>
 
           <TouchableOpacity
-            style={[styles.addButton, { backgroundColor: this.state.color }]} onPress={this.createFolder}
+            style={[styles.addButton, { backgroundColor: this.state.color }]}
+            onPress={this.createFolder}
           >
             <Text style={styles.addButtonText}>Add</Text>
           </TouchableOpacity>
@@ -97,21 +91,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  titleContainer: {
+    position: "absolute",
+    top: 68,
+    left: 24,
+  },
   title: {
     fontSize: 24,
+    fontWeight: "500",
     color: colors.black,
-    alignSelf: "center",
-    marginBottom: 16,
   },
   input: {
     height: 50,
-    marginTop: 8,
+    marginVertical: 20,
     alignSelf: "center",
   },
   addButton: {
-    marginTop: 24,
     height: 50,
-    borderRadius: 10,
+    borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -121,9 +118,19 @@ const styles = StyleSheet.create({
     color: colors.black,
   },
   customColors: {
-    borderRadius: 10,
-    width: "26%",
-    paddingTop: "26%",
-    margin: 10
+    borderRadius: 12,
+    width: 45,
+    height: 45,
+    margin: 5,
+  },
+  renderColors: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginBottom: 5,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 68,
+    right: 24,
   },
 });

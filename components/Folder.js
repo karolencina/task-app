@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Modal } from "react-native";
 import colors from "../colors";
 import TaskList from "./TaskList";
+import { FontAwesome5 } from '@expo/vector-icons';
 
 export default class Folder extends React.Component {
   state = {
@@ -56,12 +57,12 @@ export default class Folder extends React.Component {
 
           <View>
             <View style={styles.folderContent}>
+            <FontAwesome5 name="times-circle" size={24} color="black" />
               <Text style={styles.count}>{doCount}</Text>
-              <Text style={styles.subtitle}>Do</Text>
             </View>
             <View style={styles.folderContent}>
+            <FontAwesome5 name="check-circle" size={24} color="black" />
               <Text style={styles.count}>{doneCount}</Text>
-              <Text style={styles.subtitle}>Done</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -72,21 +73,27 @@ export default class Folder extends React.Component {
 
 const styles = StyleSheet.create({
   folderContainer: {
-    paddingVertical: 32,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    marginHorizontal: 12,
-    marginHorizontal: 12,
+    paddingVertical: 13,
+    paddingHorizontal: 13,
+    borderRadius: 30,
+    margin: 5,
     alignItems: "center",
-    width: 200,
+    justifyContent: "center",
+    width: 173,
+    height: 173
   },
   folderTitle: {
-    fontSize: 24,
+    fontSize: 17,
+    fontWeight: "600",
     color: colors.black,
     marginBottom: 18,
   },
   folderContent: {
+    width: 90,
+    height: 40,
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-around"
   },
   count: {
     fontSize: 28,

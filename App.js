@@ -23,6 +23,8 @@ export default class App extends React.Component {
     loading: true,
   };
 
+  /* Line 28 - 46 was created by DesignIntoCode and changed by me to fit my project */
+
   componentDidMount() {
     firebase = new Fire((error, user) => {
       if (error) {
@@ -64,16 +66,22 @@ export default class App extends React.Component {
   };
 
   render() {
+    /* 
+    ActivityIndicator provides a loading data animation 
+    when the app is opened and has not been loaded 
+    */
+
     if (this.state.loading) {
       return (
         <View style={styles.container}>
-          <ActivityIndicator size="large" color={colors.blue} />
+          <ActivityIndicator size="large" color={colors.black} />
         </View>
       );
     }
 
     return (
       <View style={styles.container}>
+
         <Modal
           animationType="slide"
           visible={this.state.addFolderVisible}
@@ -84,30 +92,35 @@ export default class App extends React.Component {
             addFolder={this.addFolder}
           />
         </Modal>
-        <View></View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.title}>Hi</Text>
-        </View>
 
-        <View style={{ marginVertical: 48 }}>
+        <View style={styles.topWrap}>
+
+          <Text style={styles.title}>Folders</Text>
+
           <TouchableOpacity
             style={styles.addFolder}
             onPress={() => this.toggleAddFolderModal()}
           >
-            <AntDesign name="plus" size={24} color={colors.black} />
+            <AntDesign name="plus" size={34} color={colors.black} />
           </TouchableOpacity>
+
         </View>
 
-        <View style={{ height: 275, paddingLeft: 32 }}>
+        {/* 
+        Folders are displayed as a FlatList 
+        */}
+
+        <View style={styles.folderList}>
           <FlatList
             data={this.state.folders}
             keyExtractor={(item) => item.id.toString()}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item }) => this.renderFolder(item)}
             keyboardShouldPersistTaps="always"
+            numColumns={2}
           />
         </View>
+
       </View>
     );
   }
@@ -119,20 +132,29 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
+    padding: 4,
   },
-  divider: {
-    backgroundColor: colors.black,
-    height: 1,
-    flex: 1,
-    alignSelf: "center",
+  topWrap: {
+    width: 345,
+    padding: 5,
+    paddingBottom: 10,
+    paddingTop: 60,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 34,
     fontWeight: "500",
     color: colors.black,
-    paddingHorizontal: 64,
   },
   addFolder: {
     alignSelf: "center",
+    justifyContent: "center",
+  },
+  folderList: {
+    flex: 1,
+    justifyContent: "center",
+    flexDirection: "row",
+    marginBottom: 4,
   },
 });

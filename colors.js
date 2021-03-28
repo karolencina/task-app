@@ -1,3 +1,7 @@
+/*
+All the colours which will be used for my application
+*/
+
 export default colors = {
     black: "#161616",
     white: "#F9F3F0",

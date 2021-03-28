@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Keyboard,
-  Animated
+  Animated,
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import colors from "../colors";
@@ -17,7 +17,7 @@ import { Swipeable } from "react-native-gesture-handler";
 
 export default class TaskList extends React.Component {
   state = {
-    newTask: "",
+    newTask: ""
   };
 
   toggleTaskCompleted = (index) => {
@@ -33,27 +33,29 @@ export default class TaskList extends React.Component {
 
     /* if a task with the name that a user is inputting already exists, the task will not be added */
 
-    if (!folder.tasks.some(task => task.title === this.state.newTask)) {
-        folder.tasks.push({ title: this.state.newTask, completed: false });
+    if (!folder.tasks.some((task) => task.title === this.state.newTask)) {
+      folder.tasks.push({ title: this.state.newTask, completed: false });
 
-        this.props.updateFolder(folder);
+      this.props.updateFolder(folder);
     }
-    
+
     this.setState({ newTask: "" });
   };
 
-  deleteTask = index => {
-      let folder = this.props.folder
-      folder.tasks.splice(index, 1)
+  deleteTask = (index) => {
+    let folder = this.props.folder;
+    folder.tasks.splice(index, 1);
 
-      this.props.updateFolder(folder);
-  }
+    this.props.updateFolder(folder);
+  };
 
   renderTasks = (task, index) => {
     const folder = this.props.folder;
 
     return (
-      <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
+      <Swipeable
+        renderRightActions={(_, dragX) => this.rightActions(dragX, index)}
+      >
         <View style={styles.taskContainer}>
           <TouchableOpacity onPress={() => this.toggleTaskCompleted(index)}>
             {/* If a task is completed, the box will filled, else it will be outlined */}
@@ -84,21 +86,21 @@ export default class TaskList extends React.Component {
     );
   };
 
-rightActions = (dragX, index) => {
+  rightActions = (dragX, index) => {
     const opacity = dragX.interpolate({
-        inputRange: [-100, -20, 0],
-        outputRange: [1, 0.9, 0],
-        extrapolate: "clamp"
+      inputRange: [-100, -20, 0],
+      outputRange: [1, 0.9, 0],
+      extrapolate: "clamp",
     });
 
     return (
-        <TouchableOpacity onPress={() => this.deleteTask(index)}>
-            <Animated.View style={[styles.deleteTask, { opacity: opacity }]}>
-                    <AntDesign name="close" size={24} color={colors.red}/>
-            </Animated.View>
-        </TouchableOpacity>
-    )
-}
+      <TouchableOpacity onPress={() => this.deleteTask(index)}>
+        <Animated.View style={[styles.deleteTask, { opacity: opacity }]}>
+          <AntDesign name="close" size={24} color={colors.red} />
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  };
 
   render() {
     const folder = this.props.folder;
@@ -110,19 +112,13 @@ rightActions = (dragX, index) => {
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <SafeAreaView style={styles.container}>
           <TouchableOpacity
-            style={{ position: "absolute", top: 64, right: 32, zIndex: 30 }}
+            style={{ position: "absolute", top: 68, right: 24, zIndex: 30 }}
             onPress={this.props.closeModal}
           >
             <AntDesign name="close" size={28} color={colors.black} />
           </TouchableOpacity>
 
-          <View
-            style={[
-              styles.section,
-              styles.header,
-              { borderBottomColor: folder.color },
-            ]}
-          >
+          <View style={styles.section}>
             <View>
               <Text style={styles.title}>{folder.name}</Text>
               <Text style={[styles.taskCount, { color: folder.color }]}>
@@ -131,11 +127,12 @@ rightActions = (dragX, index) => {
             </View>
           </View>
 
-          <View style={[styles.section, { flex: 3, marginVertical: 16 }]}>
+          <View style={[styles.section, { flex: 3 }]}>
+          {/* The FlatList below renders tasks from the database */}
             <FlatList
               data={folder.tasks}
               renderItem={({ item, index }) => this.renderTasks(item, index)}
-              keyExtractor={item => item.title}
+              keyExtractor={(item) => item.title}
               showsVerticalScrollIndicator={false}
             />
           </View>
@@ -151,7 +148,7 @@ rightActions = (dragX, index) => {
               style={styles.addButton}
               onPress={() => this.addTask()}
             >
-              <AntDesign name="plus" size={34} color={folder.color} />
+              <AntDesign name="plus" size={32} color={folder.color} />
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -168,13 +165,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   section: {
-    flex: 1,
     alignSelf: "stretch",
-  },
-  header: {
-    justifyContent: "flex-end",
-    marginLeft: 64,
-    borderBottomWidth: 3,
+    padding: 15,
   },
   title: {
     fontSize: 34,
@@ -184,29 +176,27 @@ const styles = StyleSheet.create({
   taskCount: {
     fontSize: 17,
     marginTop: 4,
-    marginBottom: 16,
     fontWeight: "600",
   },
   footer: {
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
   },
   input: {
     flex: 1,
     height: 48,
-    borderWidth: 1.5,
     marginRight: 10,
-    paddingHorizontal: 10,
     borderRadius: 5,
+    paddingHorizontal: 10
   },
   addButton: {
-    padding: 16,
+    padding: 5,
     justifyContent: "center",
     alignItems: "center",
   },
   taskContainer: {
-    paddingVertical: 16,
+    paddingVertical: 8,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -215,9 +205,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   deleteTask: {
-      flex: 1,
-justifyContent: "center",
-alignItems: "center",
-width: 40
-  }
+    marginRight: 5,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

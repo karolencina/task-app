@@ -1,3 +1,9 @@
+/* 
+This file connects the app to Firebase. It has been written 
+based on two tutorials - by DesignIntoCode and LogRocker - and changed 
+to fit my project
+*/
+
 import firebase from "firebase";
 import "@firebase/firestore";
 
@@ -34,6 +40,11 @@ class Fire {
     });
   }
 
+  /* 
+  The following code retrieves folders data from Firebase,
+  orders them alphabetically
+  */
+
   getFolders(callback) {
     let ref = this.ref.orderBy("name");
 
@@ -55,6 +66,9 @@ class Fire {
   }
 
   /*
+  I did not manage to create a working deleteFolder function
+  but I will keep on trying:
+
   deleteFolder(folder) {
       let ref = this.ref;
       ref.doc(folder.id).delete()
